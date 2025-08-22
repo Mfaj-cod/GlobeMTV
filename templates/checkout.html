@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %}Checkout — GlobeMTV{% endblock %}
+{% block content %}
+
+<div class="container my-5">
+  <h1 class="head">Checkout</h1>
+  <p class="head">Complete your payment securely.</p>
+
+  <form method="POST" action="{{ url_for('process_payment') }}" 
+        class="p-4 rounded shadow"
+        style="max-width: 600px; margin: auto; background: rgba(0,0,0,0);"> 
+    
+    <!-- Items List -->
+    <div class="mb-3">
+      <label class="form-label">Items</label>
+      <ul class="list-group">
+        {% for item in items %}
+          <li class="list-group-item d-flex justify-content-between">
+            <span>{{ item['name'] }} × {{ item['quantity'] }}</span>
+            <span>${{ '%.2f' % (item['price'] * item['quantity']) }}</span>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+    <br>
+
+    <!-- Total Amount -->
+    <div class="mb-3">
+      <label class="form-label" style="margin-right: 83px;">Total : </label>
+      <input type="text" class="form-control" value="${{ '%.2f' % total }}" readonly>
+    </div>
+    <br>
+    <div class="mb-3">
+      <label class="form-label">Have a Coupon ? </label>
+      <input type="text" class="form-control" name="coupon_code">
+    </div>
+    <br>
+
+    <!-- Payment Method -->
+    <div class="mb-3">
+      <label class="form-label">Payment Method: </label>
+      <select class="select-trigger" style="border-radius: 12px; color: aliceblue; background-color: black;" name="method" id="payment-method" required>
+        <option value="PayPal"> PayPal ( Credit / Debit )</option>
+        <option value="Crypto"> Crypto </option>
+        
+      </select>
+    </div>
+    <br>
+
+    <!-- Submit -->
+    <button type="submit" class="btn btn-primary w-100">Complete Payment</button>
+  </form>
+</div>
+
+<script>
+  const methodSelect = document.getElementById("payment-method");
+  const cardFields = document.getElementById("card-fields");
+
+  methodSelect.addEventListener("change", function() {
+    cardFields.style.display = (this.value === "Stripe") ? "block" : "none";
+  });
+</script>
+
+{% endblock %}
