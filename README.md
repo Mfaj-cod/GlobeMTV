@@ -1,6 +1,6 @@
 🌍 GlobeMTV
 
-A modern streaming-inspired platform built with Flask, SQLite, and Tailwind CSS, featuring subscription plans, checkout with Stripe integration, movie browsing, and more.
+A modern streaming-inspired platform built with Flask, SQLite, and Bootstrap CSS, featuring subscription plans, checkout with Stripe integration, movie browsing, and more.
 
 ✨ Features
 
@@ -45,9 +45,10 @@ pip install -r requirements.txt
 
 Create a .env file in the root folder:
 
-STRIPE_SECRET_KEY=your_stripe_secret
-STRIPE_PUBLISHABLE_KEY=your_stripe_publishable
-TMDB_API_KEY=your_tmdb_api_key
+EMAIL=your_email
+EMAIL_PASSWORD=your_email_app_password
+PAYPAL_CLIENT_ID=your_paypal_client_id
+PAYPAL_CLIENT_SECRET=your_paypal_client_secret
 FLASK_SECRET_KEY=your_flask_secret
 
 
