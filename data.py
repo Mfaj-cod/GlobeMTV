@@ -46,6 +46,7 @@ PRODUCTS = [
         "rating": "4.9 ⭐⭐⭐⭐⭐",
         "shipping": "3-5 days max.",
         "image": [
+            "/static/img/p6.png",
             "/static/img/p6.png"
         ],
 
@@ -133,9 +134,9 @@ PRODUCTS = [
         "rating": "4.8 ⭐⭐⭐⭐⭐",
         "shipping": "3-5 days max",
         "image": [
-            "/static/img/p50.png",
+            "/static/img/P50.png",
             "/static/img/p5.png",
-            "/static/img/p51.png",
+            "/static/img/P51.png",
             "/static/img/p501.png"
         ]
     },
