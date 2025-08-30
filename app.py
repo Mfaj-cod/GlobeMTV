@@ -73,6 +73,7 @@ def close_db(error):
 
 # Initializing the database
 def init_db():
+    print(f"🔧 Using database at: {DATABASE}")
     db = get_db()
 
     db.execute("""
@@ -1072,6 +1073,10 @@ def reviews():
     reviews = db.execute("SELECT * FROM reviews").fetchall()
 
     return render_template("reviews.html", reviews=reviews)
+
+@app.before_first_request
+def initialize_database():
+    init_db()
 
 
 if __name__ == "__main__":
