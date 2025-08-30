@@ -73,7 +73,7 @@ def close_db(error):
 
 # Initializing the database
 def init_db():
-    print(f"🔧 Using database at: {DATABASE}")
+    print(f"🔧 Using our database at: {DATABASE}")
     db = get_db()
 
     db.execute("""
