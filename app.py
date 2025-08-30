@@ -1074,7 +1074,7 @@ def reviews():
 
     return render_template("reviews.html", reviews=reviews)
 
-@app.before_first_request
+@app.before_request
 def initialize_database():
     init_db()
 
