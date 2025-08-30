@@ -41,7 +41,9 @@ app = Flask(__name__)
 app.secret_key = os.getenv("KEY")
 
 
-DATABASE = "site.db"
+# Use /data/site.db on Render (persistent disk), fall back to local file in dev
+DATABASE = os.getenv("DATABASE_PATH", os.path.join(os.path.abspath(os.path.dirname(__file__)), "site.db"))
+
 
 # DB Setup
 def get_db():
