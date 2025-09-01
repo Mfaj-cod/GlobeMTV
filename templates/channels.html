@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2 class="head">Available Channels</h2>
+<section class="container text-center my-5">
+
+
+  {% if channels %}
+  <div class="row justify-content-center">
+    {% for channel in channels %}
+    <div class="col-md-4 col-lg-3 mb-4">
+      <div class="card h-100 shadow-sm border-0">
+        <img src="{{ channel['thumbnail'] }}" class="card-img-top" alt="{{ channel['name'] }}">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">{{ channel['name'] }}</h5>
+          <p class="card-text text-muted">{{ channel['genre'] }}</p>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="alert alert-info mt-4">
+    No channels available right now. <a href="{{ url_for('home') }}">Back to Home</a>
+  </div>
+  {% endif %}
+</section>
+
+{% endblock %}
