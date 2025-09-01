@@ -34,16 +34,15 @@
 
 <h2 class="head">Contents</h2>
 <section class="container grid-3 channels">
- 
   {% for c in channels %}
-  <div class="card channel-card" style="background-image: url('{{ c.image }}');">
+  <a href="{{ url_for('channels') }}" class="card channel-card" style="background-image: url('{{ c.image }}'); text-decoration: none; color: inherit;">
     <div class="overlay"></div>
     <div class="card-content">
       <!-- <div class="big-emoji">{{ c.icon }}</div> -->
       <h3>{{ c.title }}</h3>
       <p class="muted">Curated HD & 4K streams for {{ c.title.lower() }} content.</p>
     </div>
-  </div>
+  </a>
   {% endfor %}
 </section>
 
