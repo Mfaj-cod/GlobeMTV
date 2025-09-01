@@ -234,7 +234,11 @@ CHANNEL_GROUPS = [
     },
 ]
 
-
+CHANNELS = [
+        {"id": 1, "name": "GlobeM TV News", "genre": "News", "thumbnail": "https://media.istockphoto.com/id/481950235/video/journey-through-a-video-wall-ending-on-a-green-screen.jpg?s=640x640&k=20&c=19pj7xiONZ-IPWOYYtzwPSTQXOKtOhbudWMJqLhIxPk="},
+        {"id": 2, "name": "GlobeM Sports", "genre": "Sports", "thumbnail": "https://indiaobservers.com/wp-content/uploads/2022/07/top-web-series-in-the-world-highest-rated.jpg"},
+        {"id": 3, "name": "GlobeM Movies", "genre": "Entertainment", "thumbnail": "https://images.gizbot.com/img/2021/02/what-is-ott-platform-best-10-ott-platforms-in-india-1613237548.jpg"},
+]
 
 
 POSTS = [
