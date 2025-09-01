@@ -9,7 +9,7 @@ from datetime import datetime
 import os
 import smtplib
 import uuid
-from data import PRODUCTS, PLANS, CHANNEL_GROUPS, POSTS, MOVIES, COUPONS, msg
+from data import PRODUCTS, PLANS, CHANNEL_GROUPS, POSTS, MOVIES, COUPONS, CHANNELS, msg
 import os
 import paypalrestsdk
 # from coinbase_commerce.client import Client as CbClient
@@ -73,7 +73,6 @@ def close_db(error):
 
 # Initializing the database
 def init_db():
-    print(f"🔧 Using our database at: {DATABASE}")
     db = get_db()
 
     db.execute("""
@@ -171,6 +170,14 @@ def init_db():
           description TEXT NOT NULL
         );
     """)
+    db.execute("""
+        CREATE TABLE IF NOT EXISTS channels (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT NOT NULL,
+            genre TEXT NOT NULL,
+            thumbnail TEXT NOT NULL
+        );
+    """)
 
     # Admin
     db.execute("UPDATE users SET is_admin = 1 WHERE email = ?", ("globemtv@gmail.com",))
@@ -223,6 +230,13 @@ def init_db():
                     "INSERT INTO product_images (product_id, image_path) VALUES (?, ?)",
                     (p["id"], img)
                 )
+        for c in CHANNELS:
+            exists = db.execute("SELECT 1 FROM channels WHERE id=?", (c["id"],)).fetchone()
+            if not exists:
+                db.execute("""
+                    INSERT INTO channels (id, name, genre, thumbnail)
+                    VALUES (?, ?, ?, ?)
+                """, (c["id"], c["name"], c["genre"], c["thumbnail"]))
     db.commit()
 
 
@@ -297,6 +311,12 @@ def product_detail(pid):
         return redirect(url_for("products"))
     
     return render_template("product_detail.html", product=product)
+
+
+@app.route("/channels")
+def channels():
+    return render_template("channels.html", channels=CHANNELS)
+
 
 
 @app.route("/faq")
@@ -1073,10 +1093,6 @@ def reviews():
     reviews = db.execute("SELECT * FROM reviews").fetchall()
 
     return render_template("reviews.html", reviews=reviews)
-
-@app.before_request
-def initialize_database():
-    init_db()
 
 
 if __name__ == "__main__":
