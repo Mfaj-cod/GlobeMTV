@@ -74,6 +74,7 @@ def close_db(error):
 # Initializing the database
 def init_db():
     db = get_db()
+    print("using database at /data/site.db")
 
     db.execute("""
         CREATE TABLE IF NOT EXISTS users (
