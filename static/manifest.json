@@ -1,0 +1,67 @@
+{
+    "name": "GlobeMTV",
+    "short_name": "GlobeMTV",
+    "description": "Entertainment, live channels and on-demand videos from GlobeMTV.",
+    "start_url": "/?utm_source=web_app_manifest",
+    "scope": "/",
+    "display": "standalone",
+    "orientation": "portrait-primary",
+    "background_color": "#0b0f14",
+    "theme_color": "#121821",
+    "categories": ["entertainment", "video", "news"],
+    "prefer_related_applications": false,
+    "icons": [
+        {
+            "src": "/static/icons/72.png",
+            "sizes": "72x72",
+            "type": "image/png"
+        },
+        {
+            "src": "/static/icons/96.png",
+            "sizes": "96x96",
+            "type": "image/png"
+        },
+        {
+            "src": "/static/icons/128.png",
+            "sizes": "128x128",
+            "type": "image/png"
+        },
+        {
+            "src": "/static/icons/192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/static/icons/512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        },
+        {
+            "src": "/static/icons/maskable-icon.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable"
+        }
+    ],
+    "shortcuts": [
+        {
+            "name": "devices",
+            "short_name": "shop",
+            "description": "Device and Accessories",
+            "url": "/products"
+        },
+        {
+            "name": "My Cart",
+            "short_name": "Cart",
+            "description": "Continue buying your favourite devices.",
+            "url": "/cart"
+        }
+    ],
+    "screenshots": [
+        {
+            "src": "/icons/sshome.png",
+            "sizes": "640x360",
+            "type": "image/png"
+        }
+    ]
+}
