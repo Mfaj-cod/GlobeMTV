@@ -4,10 +4,14 @@
     "description": "Entertainment, live channels and on-demand videos from GlobeMTV.",
     "start_url": "/?utm_source=web_app_manifest",
     "scope": "/",
+    "id": "/",
     "display": "standalone",
     "orientation": "portrait-primary",
     "background_color": "#0b0f14",
     "theme_color": "#121821",
+    "display_override": ["window-controls-overlay", "standalone", "browser"],
+    "lang": "en",
+    "dir": "ltr",
     "categories": ["entertainment", "video", "news"],
     "prefer_related_applications": false,
     "icons": [
@@ -66,3 +70,4 @@
     ]
 
 }
+
