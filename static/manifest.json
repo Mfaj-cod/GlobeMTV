@@ -12,32 +12,32 @@
     "prefer_related_applications": false,
     "icons": [
         {
-            "src": "/static/icons/72.png",
+            "src": "/static/72.png",
             "sizes": "72x72",
             "type": "image/png"
         },
         {
-            "src": "/static/icons/96.png",
+            "src": "/static/96.png",
             "sizes": "96x96",
             "type": "image/png"
         },
         {
-            "src": "/static/icons/128.png",
+            "src": "/static/128.png",
             "sizes": "128x128",
             "type": "image/png"
         },
         {
-            "src": "/static/icons/192.png",
+            "src": "/static/192.png",
             "sizes": "192x192",
             "type": "image/png"
         },
         {
-            "src": "/static/icons/512.png",
+            "src": "/static/512.png",
             "sizes": "512x512",
             "type": "image/png"
         },
         {
-            "src": "/static/icons/maskable-icon.png",
+            "src": "/static/maskable-icon.png",
             "sizes": "512x512",
             "type": "image/png",
             "purpose": "maskable"
@@ -59,9 +59,10 @@
     ],
     "screenshots": [
         {
-            "src": "/icons/sshome.png",
+            "src": "/static/sshome.png",
             "sizes": "640x360",
             "type": "image/png"
         }
     ]
+
 }
