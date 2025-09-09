@@ -34,7 +34,9 @@
           <td></td>
           <td></td>
           <td class="text-center">
+          {{% if item['quantity'] > 1 %}}
            <a href="{{ url_for('update_quantity', cart_id=item['id'], action='decrease') }}" class="btn btn-sm btn-outline-secondary">-</a>
+          {{% endif %}}
             <span class="mx-2">{{ item['quantity'] }}</span>
             <a href="{{ url_for('update_quantity', cart_id=item['id'], action='increase') }}" class="btn btn-sm btn-outline-secondary">+</a>
           </td>
