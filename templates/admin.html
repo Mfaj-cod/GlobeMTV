@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Admin Dashboard — GlobeMTV{% endblock %}
+{% block content %}
+<section class="container">
+  <h1 class="section-title">Admin Dashboard</h1>
+  <p>Welcome, {{ g.user['username'] }}! (Admin)</p>
+
+  <table class="table">
+    <thead>
+      <tr style="font-size: large;">
+        <th>Username</th>
+        <th></th><th></th>
+        <th>Email</th>
+        <th></th><th></th>
+        <th>Plan</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for user in users %}
+      <tr>
+        <td>{{ user['username'] }}</td>
+        <td></td><td></td>
+        <td>{{ user['email'] }}</td>
+        <td></td><td></td>
+        <td>{{ user['plan'] }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+<br>
+  <a href="{{ url_for('logout') }}" class="btn btn-secondary">Logout</a>
+</section>
+{% endblock %}

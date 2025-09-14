@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="trial-section">
+  <div class="trial-card">
+    <h1>Trial Instructions</h1>
+    <ul style="text-align: left;">
+      <li>Only 1x trial access per customer allowed.</li>
+      <li>Trials has full access to all channels, video (VOD) & series library, including full dashboard functions.</li>
+      <li>Trials have no limit to the service. What you see is what you get.</li>
+      <li>MAG, Enigma or just M3U ?? All devices can be tested. Only 1 connection allowed!</li>
+    </ul>
+    <p>Enjoy unlimited streaming for 24 hours.</p>
+    <form method="post" action="/activate-trial">
+      <button type="submit" class="btn btn-primary">Activate Free Trial</button>
+    </form>
+  </div>
+</section>
+{% endblock %}

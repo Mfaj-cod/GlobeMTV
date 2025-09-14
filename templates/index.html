@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% block title %}GlobeMTV — Stream Everything{% endblock %}
+{% block content %}
+<section class="hero container">
+  <div class="hero-text">
+    <h1>Stream everything you love — live & on demand.</h1>
+    <p class="lead">12,000+ channels and 35,000+ VOD. Simple pricing, instant activation, works on your favourite devices.</p>
+    <div class="hero-cta">
+      <a class="btn btn-primary" href="{{ url_for('free_trial') }}">Start Free 24h Trial</a>
+      <a class="btn btn-ghost" href="{{ url_for('products') }}">Browse Devices</a>
+    </div>
+    <div class="badges">
+      <span>4K + UltraHD</span>
+      <span>No setup fees</span>
+      <span>24/7 Support</span>
+    </div>
+  </div>
+</section>
+
+<h2 class="head">Trending Now</h2>
+<section class="movies-section">
+  <div class="movie-slider">
+    {% for movie in movies %}
+    <div class="movie-card">
+      <img src="{{ movie.image }}" alt="{{ movie.title }}">
+      <h3 style="text-align: center;">{{ movie.title }}</h3>
+
+      <!-- <p>{{ movie.description }}</p> -->
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+
+<h2 class="head">Contents</h2>
+<section class="container grid-3 channels">
+  {% for c in channels %}
+  <a href="{{ url_for('channels') }}" class="card channel-card" style="background-image: url('{{ c.image }}'); text-decoration: none; color: inherit;">
+    <div class="overlay"></div>
+    <div class="card-content">
+      <!-- <div class="big-emoji">{{ c.icon }}</div> -->
+      <h3>{{ c.title }}</h3>
+      <p class="muted">Curated HD & 4K streams for {{ c.title.lower() }} content.</p>
+    </div>
+  </a>
+  {% endfor %}
+</section>
+
+
+<section class="container plans">
+  <h2 class="head">Our Plans</h2>
+  <div class="grid-3">
+    {% for p in plans %}
+    <div class="card plan">
+      <h3>{{ p.title }}</h3>
+      <div class="price">
+        <span class="curr">$</span>{{ '%.2f' % p.price }}
+        <span class="per">/{{ p.period }}</span>
+      </div>
+      <ul class="feat" style="text-align: left;">
+        {% for f in p.features %}<li>{{ f }}</li>{% endfor %}
+      </ul>
+
+      <a class="btn btn-primary w-100" href="{{ url_for('add_plan_to_cart', plan_id=p['id']) }}">Add to Cart</a>
+    </div>
+    {% endfor %}
+  </div>
+  <div class="offer">
+    <p>Contact us for the Exclusive Offer✨, Where you can get a 3-Year Subscription for the Basic Plan at just $249.99! <br><a href="{{ url_for('contact') }}" class="btn btn-secondary" style="margin-top: 1rem;">Contact Us</a></p>
+  </div>
+</section>
+
+<section class="container">
+  <h2 class="head">Featured Products</h2>
+  <div class="grid-3">
+    {% for p in products %}
+    <a class="card product" href="{{ url_for('product_detail', pid=p.id) }}">
+
+        <div class="product-header">
+          <h3>{{ p.name }}</h3>
+          <span class="badge bg-primary text-wrap">{{ p.badge }}</span>
+        </div>
+
+        <div class="product-foot">
+          <span class="price large">${{ '%.2f' % p.price }}</span>
+          <span class="cta">View</span>
+          <br><br>
+          <div style="font-size: xx-small;">{{ p.rating }}</div>
+        </div>
+
+    </a>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="container ctas">
+  <div class="cta card gradient">
+    <div>
+      <h3>Try a Free 24h Trial</h3>
+      <p class="muted">Experience the full package before subscribing long-term.</p>
+    </div>
+    <a class="btn btn-secondary" href="{{ url_for('free_trial') }}">Free Trial</a>
+  </div>
+</section>
+
+{% endblock %}
