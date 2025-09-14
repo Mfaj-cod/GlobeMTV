@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Store — GlobeMTV{% endblock %}
+{% block content %}
+<section class="container">
+  <h1 class="section-title">Devices & Accessories</h1>
+  
+  <!-- Product Grid -->
+  <div class="grid-3">
+    {% for p in products %}
+    <a class="card product h-100 d-flex flex-column" href="{{ url_for('product_detail', pid=p.id) }}">
+      
+      <!-- Image Container -->
+      <div class="product-img d-flex justify-content-center align-items-center" 
+           style="height: 200px; overflow: hidden; background:#f8f9fa;">
+        <img src="{{ p.image[0] }}" 
+             alt="{{ p.name }}" 
+             class="img-fluid" 
+             style="max-height: 100%; object-fit: contain;">
+      </div>
+
+      <!-- Product Details -->
+      <div class="product-body d-flex flex-column flex-grow-1 p-3">
+        
+        <!-- Product Title & Badge -->
+        <div class="product-header mb-2">
+          <h3 class="mb-1">{{ p.name }}</h3>
+          <span class="badge" 
+                style="white-space: normal; word-wrap: break-word; max-width: 100%; display:inline-block; background:#0d6efd; color:white;">
+            {{ p.badge }}
+          </span>
+        </div>
+        
+        <!-- Price & CTA (sticks to bottom) -->
+        <div class="product-foot mt-auto d-flex justify-content-between align-items-center">
+          <span class="price">${{ '%.2f' % p.price }}</span>
+          <span class="cta">View</span>
+          <br><br>
+          <div style="font-size: small;">{{ p.rating }}</div>
+        </div>
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

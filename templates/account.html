@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% block title %}Account — GlobeMTV{% endblock %}
+{% block content %}
+<section class="container">
+  <h1 class="section-title">Account</h1>
+
+  {% if "user_id" in session: %}
+    <!-- Logged-in view -->
+    <div class="card" style="padding: 2rem; text-align: center;">
+      <h2>Welcome, {{ username }}!</h2>
+      <p>You are now logged in to your GlobeMTV account.</p>
+      <br>
+
+      <!-- Active Plans -->
+      {% if plans %}
+        <div style="margin: 2rem 0;">
+          <h3>Your Active Plans</h3>
+          <ul style="list-style: none; padding: 0;">
+            {% for plan in plans %}
+              <li style="margin: 1rem 0; padding: 1rem; border: 1px solid #eee; border-radius: 8px;">
+                <strong>{{ plan.name }}</strong>
+                {% if plan.expiry %}
+                  <span style="color: #888;">(expires {{ plan.expiry }})</span>
+                {% endif %}
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% else %}
+        <p>You do not have any active plans.</p>
+      {% endif %}
+
+      <!-- Order History -->
+      <div style="margin: 2rem 0;">
+        <h3>Your Orders</h3>
+        {% if orders %}
+          {% for order in orders %}
+            <div style="border: 1px solid #eee; border-radius: 8px; margin: 1rem 0; padding: 1rem; text-align: left;">
+              <p><strong>Order #{{ order.id }}</strong> — {{ order.status|capitalize }}</p>
+              <p>Placed on: {{ order.created_at }}</p>
+              <p>Payment via: {{ order.gateway|capitalize }}</p>
+
+              {% if order_items and order_items[order.id] %}
+                <ul>
+                  {% for item in order_items[order.id] %}
+                    <li>
+                      {% if item.image %}
+                        <img src="{{ item.image }}" alt="{{ item.title }}" style="width:50px;height:auto;">
+                      {% endif %}
+                      {{ item.title }} × {{ item.quantity }}
+                    </li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
+            </div>
+          {% endfor %}
+        {% else %}
+          <p>You haven't placed any orders yet.</p>
+        {% endif %}
+      </div>
+
+      <!-- Logout + Delete Account -->
+
+      <a href="{{ url_for('logout') }}" class="btn btn-secondary" style="margin-top: 1rem;">Logout</a>
+      <br><br>
+      <form method="POST" action="{{ url_for('delete_account') }}">
+        <label for="password">Re-enter Password to Delete Account: </label>
+        <input type="password" name="password" required>
+        <br>
+        <button type="submit" class="btn btn-secondary" style="margin-top: 1rem; background-color: red;">Delete Account</button>
+      </form>
+    </div>
+
+  {% else %}
+    <!-- Not logged in -->
+    <div class="card" style="padding: 2rem; text-align: center;">
+      <p>Please log in or create an account to continue.</p>
+      <a href="{{ url_for('login') }}" class="btn btn-primary" style="margin: 0.5rem;">Login</a>
+      <a href="{{ url_for('register') }}" class="btn btn-secondary" style="margin: 0.5rem;">Register</a>
+    </div>
+  {% endif %}
+</section>
+{% endblock %}

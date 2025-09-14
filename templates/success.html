@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Payment Success — GlobeMTV{% endblock %}
+{% block content %}
+
+<div class="container text-center my-5">
+  <div class="p-5 shadow rounded bg-success text-white">
+    <h1 class="mb-3">✅ Payment Successful</h1>
+    <p>Thank you for your purchase, {{ user.username }}!</p>
+    <p>Your order ID is: <strong>{{ order.id }}</strong></p>
+    <p>You will receive a confirmation email shortly.</p>
+    <a href="{{ url_for('index') }}" class="btn btn-light mt-4">Return Home</a>
+  </div>
+</div>
+
+{% endblock %}

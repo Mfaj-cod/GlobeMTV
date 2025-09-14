@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}GlobeMTV — Reviews{% endblock %}
+{% block content %}
+
+<section class="container my-5">
+  <h2 class="head text-center">User Reviews</h2>
+  <p class="muted text-center mb-4">See what our users think about GlobeMTV and share your own review.</p>
+
+    <!-- Display Reviews -->
+  <div class="row">
+    {% for r in reviews %}
+    <div class="col-md-6 mb-4">
+      <div class="card review-card h-100 bg-dark text-light">
+        <div class="card-body">
+          <h5><span class="rating">{{ r.rating }}⭐</span></h5>
+          <p><strong>{{ r.name }}:</strong> {{ r.comment }}</p>
+        </div>
+      </div>
+    </div>
+    {% else %}
+    <p class="text-center">No reviews yet. Be the first to add one!</p>
+    {% endfor %}
+  </div>
+  <br>
+  
+<!-- Transparent Review Form -->
+  <form method="POST" action="{{ url_for('reviews') }}" class="transparent-form mb-5">
+    <div class="mb-3">
+      <input type="text" name="name" class="form-control bg-transparent text-light border-light" placeholder="Your Name" required>
+    </div>
+    <br>
+    <div class="mb-3">
+      <textarea name="comment" class="form-control bg-transparent text-light border-light" rows="4" placeholder="Write your review..." required></textarea>
+    </div>
+    <br>
+    <div class="custom-select">
+      <div class="select-trigger" style="border-radius: 20px;">⭐ Select Rating</div>
+        <ul class="options" style="border-radius: 20px;">
+          <li data-value="1" style="border-radius: 20px;">⭐</li>
+          <li data-value="2" style="border-radius: 20px;">⭐⭐</li>
+          <li data-value="3" style="border-radius: 20px;">⭐⭐⭐</li>
+          <li data-value="4" style="border-radius: 20px;">⭐⭐⭐⭐</li>
+          <li data-value="5" style="border-radius: 20px;">⭐⭐⭐⭐⭐</li>
+        </ul>
+      </div>
+
+    <input type="hidden" name="rating" id="rating" />
+    <br>
+    <button type="submit" class="btn btn-primary" style="width: 200px;">Submit Review</button>
+  </form>
+</section>
+
+{% endblock %}
