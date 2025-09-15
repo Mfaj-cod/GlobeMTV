@@ -772,8 +772,6 @@ body::before {
 }
 
 .hero-video iframe {
-  width: 560px;
-  height: 315px;
   border: none;
   border-radius: 12px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
