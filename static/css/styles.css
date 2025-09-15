@@ -663,6 +663,11 @@ body::before {
     display: block;
     margin: 0 auto;
   }
+  .hero-video iframe {
+    width: 90vw;
+    height: auto;
+    aspect-ratio: 16 / 9; /* maintain 16:9 ratio */
+  }
 }
 
 .movie-card img{
@@ -757,3 +762,10 @@ body::before {
   background: rgba(255,255,255,0.2);
 }
 
+
+
+.hero-video {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
