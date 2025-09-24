@@ -141,3 +141,45 @@ window.addEventListener("beforeinstallprompt", (e) => {
     document.getElementById("pwa-install-banner").remove();
   });
 });
+
+const chatBtn = document.getElementById("chatBtn");
+
+let isDragging = false;
+let offsetX, offsetY;
+
+// Start dragging
+chatBtn.addEventListener("mousedown", (e) => {
+  isDragging = true;
+  offsetX = e.clientX - chatBtn.getBoundingClientRect().left;
+  offsetY = e.clientY - chatBtn.getBoundingClientRect().top;
+  chatBtn.style.transition = "none"; // Disable hover transitions while dragging
+
+  // Prevent link from being triggered while dragging
+  chatBtn.addEventListener("click", preventClick, true);
+});
+
+function preventClick(e) {
+  if (isDragging) {
+    e.preventDefault();
+    chatBtn.removeEventListener("click", preventClick, true);
+  }
+}
+
+// Move the button
+document.addEventListener("mousemove", (e) => {
+  if (isDragging) {
+    chatBtn.style.left = `${e.clientX - offsetX}px`;
+    chatBtn.style.top = `${e.clientY - offsetY}px`;
+    chatBtn.style.right = "auto";
+    chatBtn.style.bottom = "auto";
+    chatBtn.style.position = "fixed";
+  }
+});
+
+// Stop dragging
+document.addEventListener("mouseup", () => {
+  if (isDragging) {
+    isDragging = false;
+    chatBtn.style.transition = ""; // Re-enable hover transition
+  }
+});
