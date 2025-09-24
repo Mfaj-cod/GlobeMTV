@@ -6,3 +6,4 @@ gunicorn
 requests
 paypalrestsdk
 bs4
+openai
