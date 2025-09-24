@@ -44,10 +44,6 @@
     </nav>
   </header>
 
-  <a href="{{ url_for('chatbot') }}" class="chat-fab" title="Chat with GlobeMTV">
-    <i class="bi bi-chat-dots"></i>
-  </a>
-
 
   {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
