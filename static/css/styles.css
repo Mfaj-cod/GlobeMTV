@@ -812,7 +812,7 @@ body::before {
   transform: translateY(-2px) scale(1.05);
   text-decoration: none;
 }
-@media (max-width: 600px) {
+/* @media (max-width: 600px) {
   .chat-fab {
     right: max(0.75rem, env(safe-area-inset-right, 0.5rem));
     bottom: max(0.75rem, env(safe-area-inset-bottom, 0.5rem));
@@ -820,8 +820,9 @@ body::before {
     height: 48px;
     font-size: 1.4rem;
     /* Remove padding to prevent button from being hidden or clipped */
-    padding: 0;
-}
+    /*padding: 0;
+}*/
+
 
 
 /* For chat,html */
