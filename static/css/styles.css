@@ -789,7 +789,7 @@ body::before {
 .chat-fab {
   position: fixed;
   right: 2rem;
-  bottom: 3.5rem;
+  bottom: 4rem;
   z-index: 9999;
   background: var(--primary, #2c7bf0);
   color: #fff;
