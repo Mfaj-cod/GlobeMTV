@@ -814,13 +814,13 @@ body::before {
 }
 @media (max-width: 600px) {
   .chat-fab {
-    right: 0.5rem;
-    bottom: 0.5rem;
+    right: max(0.75rem, env(safe-area-inset-right, 0.5rem));
+    bottom: max(0.75rem, env(safe-area-inset-bottom, 0.5rem));
     width: 48px;
     height: 48px;
     font-size: 1.4rem;
-    padding: env(safe-area-inset-bottom, 0) env(safe-area-inset-right, 0) 0 0;
-  }
+    /* Remove padding to prevent button from being hidden or clipped */
+    padding: 0;
 }
 
 
