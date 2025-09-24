@@ -2,7 +2,7 @@ import sqlite3
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask import (
     Flask, render_template, request, redirect,
-    url_for, flash, session, g
+    url_for, flash, session, g, jsonify
 )
 from functools import wraps
 from datetime import datetime
@@ -12,6 +12,7 @@ import uuid
 from data import PRODUCTS, PLANS, CHANNEL_GROUPS, POSTS, MOVIES, COUPONS, CHANNELS, msg
 import os
 import paypalrestsdk
+from openai import OpenAI
 # from coinbase_commerce.client import Client as CbClient
 
 paypalrestsdk.configure({
@@ -39,7 +40,6 @@ CHECKOUT_CURRENCY = os.getenv("CHECKOUT_CURRENCY", "USD").upper()
 # app
 app = Flask(__name__)
 app.secret_key = os.getenv("KEY")
-
 
 # Use /data/site.db on Render (persistent disk), fall back to local file in dev
 DATABASE = os.getenv("DATABASE_PATH", os.path.join(os.path.abspath(os.path.dirname(__file__)), "site.db"))
@@ -1094,6 +1094,49 @@ def reviews():
     reviews = db.execute("SELECT * FROM reviews").fetchall()
 
     return render_template("reviews.html", reviews=reviews)
+
+
+
+@app.route("/chatbot")
+def chatbot():
+    return render_template("chat.html")
+
+
+# API endpoint
+# Load key (debug check)
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+if not OPENAI_API_KEY:
+    raise RuntimeError("❌ OPENAI_API_KEY is not set in environment!")
+model = "openai/gpt-oss-120b"
+
+@app.route("/chat", methods=["POST"])
+def chat():
+    try:
+        user_message = request.json.get("message", "")
+
+        if not user_message:
+            return jsonify({"response": "⚠️ Please enter a message."})
+
+        # Connect Groq API
+        client = OpenAI(
+            api_key=OPENAI_API_KEY,
+            base_url="https://api.groq.com/openai/v1"
+        )
+        response = client.chat.completions.create(
+            model=model,
+            messages=[
+                {"role": "system", "content": "You are a helpful assistant. Please answer in as maximum of 50 words as possible."},
+                {"role": "user", "content": user_message}
+            ]
+        )
+
+        # model response
+        bot_reply = response.choices[0].message.content
+
+        return jsonify({"response": bot_reply})
+
+    except Exception as e:
+        return jsonify({"response": f"⚠️ Error: {str(e)}"}), 500
 
 
 if __name__ == "__main__":
