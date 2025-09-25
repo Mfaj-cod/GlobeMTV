@@ -1107,7 +1107,7 @@ def chatbot():
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 if not OPENAI_API_KEY:
     raise RuntimeError("❌ OPENAI_API_KEY is not set in environment!")
-model = "openai/gpt-oss-120b"
+model = "llama-3.3-70b-versatile"
 
 @app.route("/chat", methods=["POST"])
 def chat():
