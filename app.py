@@ -71,6 +71,21 @@ def close_db(error):
     if db is not None:
         db.close()
 
+
+def init_chat_history_table():
+    db = get_db()
+    db.execute("""
+        CREATE TABLE IF NOT EXISTS chat_history (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id TEXT DEFAULT 'default',
+            role TEXT NOT NULL,        -- 'user' or 'assistant'
+            message TEXT NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    """)
+    db.commit()
+
+
 # Initializing the database
 def init_db():
     db = get_db()
@@ -1190,4 +1205,5 @@ def chat():
 if __name__ == "__main__":
     with app.app_context():
         init_db()
+        init_chat_history_table()
     app.run(debug=True)
