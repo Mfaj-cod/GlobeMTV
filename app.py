@@ -179,6 +179,15 @@ def init_db():
             thumbnail TEXT NOT NULL
         );
     """)
+    db.execute("""
+        CREATE TABLE IF NOT EXISTS chat_history (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id TEXT DEFAULT 'default', -- optional, use session/user ID
+            role TEXT NOT NULL,            -- 'user' or 'assistant'
+            message TEXT NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );
+    """)
 
     # Admin
     db.execute("UPDATE users SET is_admin = 1 WHERE email = ?", ("globemtv@gmail.com",))
@@ -1114,30 +1123,68 @@ model = "openai/gpt-oss-120b"
 def chat():
     try:
         user_message = request.json.get("message", "")
+        user_id = request.json.get("user_id", "default")  # default if not logged in
+        MAX_MESSAGES = 50  # keep last 50 messages per user
 
         if not user_message:
             return jsonify({"response": "⚠️ Please enter a message."})
 
-        # Connect Groq API
+        db = get_db()
+
+        #  Save user message
+        db.execute(
+            "INSERT INTO chat_history (user_id, role, message) VALUES (?, ?, ?)",
+            (user_id, "user", user_message)
+        )
+        db.commit()
+
+        #  Fetch last 10 messages for context
+        recent_msgs = db.execute(
+            "SELECT role, message FROM chat_history WHERE user_id=? ORDER BY id DESC LIMIT 10",
+            (user_id,)
+        ).fetchall()
+        messages = [{"role": role, "content": msg} for role, msg in reversed(recent_msgs)]
+        messages = [{"role": "system", "content": system_prompt}] + messages
+
+        #  Call Groq API
         client = OpenAI(
-            api_key=OPENAI_API_KEY,
+            api_key=os.environ.get("OPENAI_API_KEY"),
             base_url="https://api.groq.com/openai/v1"
         )
         response = client.chat.completions.create(
             model=model,
-            messages=[
-                {"role": "system", "content": system_prompt},
-                {"role": "user", "content": user_message}
-            ]
+            messages=messages
         )
-
-        # model response
         bot_reply = response.choices[0].message.content
+
+        #  Save assistant reply
+        db.execute(
+            "INSERT INTO chat_history (user_id, role, message) VALUES (?, ?, ?)",
+            (user_id, "assistant", bot_reply)
+        )
+        db.commit()
+
+        #  Trim older messages to keep DB size in check
+        db.execute(
+            f"""
+            DELETE FROM chat_history
+            WHERE id NOT IN (
+                SELECT id FROM chat_history
+                WHERE user_id = ?
+                ORDER BY id DESC
+                LIMIT {MAX_MESSAGES}
+            )
+            AND user_id = ?
+            """,
+            (user_id, user_id)
+        )
+        db.commit()
 
         return jsonify({"response": bot_reply})
 
     except Exception as e:
         return jsonify({"response": f"⚠️ Error: {str(e)}"}), 500
+
 
 
 if __name__ == "__main__":
