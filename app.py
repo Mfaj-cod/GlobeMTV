@@ -1098,6 +1098,7 @@ def reviews():
 
 
 @app.route("/chatbot")
+@login_required
 def chatbot():
     return render_template("chat.html")
 
@@ -1125,7 +1126,7 @@ def chat():
         response = client.chat.completions.create(
             model=model,
             messages=[
-                {"role": "system", "content": "You are a helpful assistant. Please answer in as maximum of 50 words as possible."},
+                {"role": "system", "content": "You are a helpful chat assistant of globemtv.com website that helps users of the globemTV. Please answer according to the website and services we provide."},
                 {"role": "user", "content": user_message}
             ]
         )
