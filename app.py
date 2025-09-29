@@ -9,7 +9,7 @@ from datetime import datetime
 import os
 import smtplib
 import uuid
-from data import PRODUCTS, PLANS, CHANNEL_GROUPS, POSTS, MOVIES, COUPONS, CHANNELS, msg
+from data import PRODUCTS, PLANS, CHANNEL_GROUPS, POSTS, MOVIES, COUPONS, CHANNELS, msg, system_prompt
 import os
 import paypalrestsdk
 from openai import OpenAI
@@ -1126,7 +1126,7 @@ def chat():
         response = client.chat.completions.create(
             model=model,
             messages=[
-                {"role": "system", "content": "You are a helpful chat assistant of globemtv.com website that helps users of the globemTV. Please answer according to the website and services we provide."},
+                {"role": "system", "content": system_prompt},
                 {"role": "user", "content": user_message}
             ]
         )
