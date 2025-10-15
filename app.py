@@ -1122,7 +1122,6 @@ def reviews():
 
 
 @app.route("/chatbot")
-@login_required
 def chatbot():
     return render_template("chat.html")
 
